@@ -46,7 +46,6 @@ describe CounterString do
 
   it "returns ...2047* for length 2047" do
     string = @cs.generate(2047)
-    puts string
     string.size.should == 2047
     string[-5..-1].should == "2047*"
   end

@@ -5,17 +5,20 @@ require 'CounterString'
 cs = CounterString.new
 
 def paste_command
-    if RUBY_PLATFORM =~ /mswin/
-        'clip'
+  case RUBY_PLATFORM
+    when /mswin/
+      'clip'
+    when /darwin/
+      'pbcopy'
     else
-        'pbcopy'
-    end
+      nil
+  end
 end
 
 if ARGV[0] != nil
-    output = cs.generate ARGV[0]
-    `echo #{output} | #{paste_command}`
-    puts output
+  output = cs.generate ARGV[0]
+  `echo #{output} | #{paste_command}` if paste_command
+  puts output
 else
-    puts "Please specify the string length"
+  puts "Please specify the string length"
 end
